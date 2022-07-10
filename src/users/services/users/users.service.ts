@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { User } from 'src/users/entities/user.entity';
+import { encodePassword } from 'src/users/utils/bcypt';
 import { Repository } from 'typeorm';
 @Injectable()
 export class UsersService {
@@ -22,7 +23,9 @@ export class UsersService {
   }
 
   createOne(createUserDto: CreateUserDto) {
-    return this.userRepository.save(createUserDto);
+    const password = encodePassword(createUserDto.password);
+    const newUser = this.userRepository.create({ ...createUserDto, password });
+    return this.userRepository.save(newUser);
   }
 
   async remove(id: number): Promise<void> {
