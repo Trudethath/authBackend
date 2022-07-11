@@ -13,4 +13,10 @@ export class UserEntity {
 
   @Column({ default: true })
   isActive: boolean;
+
+  @Column({ nullable: true })
+  created_at: string;
+
+  @Column({ nullable: true })
+  updated_at: string;
 }

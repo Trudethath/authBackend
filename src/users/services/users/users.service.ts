@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { encode } from 'punycode';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 // import { UserEntity } from 'src/users/entities/user.entity';
 import { UserEntity } from 'src/users/entities';
@@ -26,9 +27,13 @@ export class UsersService {
   }
 
   createOne(createUserDto: CreateUserDto) {
-    const password = encodePassword(createUserDto.password);
-    const newUser = this.userRepository.create({ ...createUserDto, password });
-    return this.userRepository.save(newUser);
+    const date = new Date().toLocaleDateString();
+    const userCopy = createUserDto;
+    userCopy.password = encodePassword(createUserDto.password);
+    userCopy.created_at = date;
+    userCopy.updated_at = date;
+
+    return this.userRepository.save(userCopy);
   }
 
   async remove(id: number): Promise<void> {

@@ -8,4 +8,7 @@ export class CreateUserDto {
   @IsNotEmpty()
   @MinLength(5)
   password: string;
+
+  created_at: string;
+  updated_at: string;
 }
