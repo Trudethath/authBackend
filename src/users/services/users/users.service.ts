@@ -1,24 +1,27 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { User } from 'src/users/entities/user.entity';
+// import { UserEntity } from 'src/users/entities/user.entity';
+import { UserEntity } from 'src/users/entities';
 import { encodePassword } from 'src/users/utils/bcypt';
 import { Repository } from 'typeorm';
+
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User) private userRepository: Repository<User>,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  findAll(): Promise<User[]> {
+  findAll(): Promise<UserEntity[]> {
     return this.userRepository.find();
   }
 
-  findOneById(id: number): Promise<User> {
+  findOneById(id: number): Promise<UserEntity> {
     return this.userRepository.findOneBy({ id });
   }
 
-  findOneByUsername(username: string): Promise<User> {
+  findOneByUsername(username: string): Promise<UserEntity> {
     return this.userRepository.findOneBy({ username });
   }
 
