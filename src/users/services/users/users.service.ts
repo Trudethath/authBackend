@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { encode } from 'punycode';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
-// import { UserEntity } from 'src/users/entities/user.entity';
 import { UserEntity } from 'src/users/entities';
 import { encodePassword } from 'src/users/utils/bcypt';
 import { Repository } from 'typeorm';
